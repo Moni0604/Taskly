@@ -7,7 +7,12 @@ const totalTasks = document.getElementById("totalTasks");
 const completedTasks = document.getElementById("completedTasks");
 const pendingTasks = document.getElementById("pendingTasks");
 
-let tasks = [];
+// Load saved tasks from browser storage
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+function saveTasks() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
 function updateDashboard() {
     totalTasks.textContent = tasks.length;
@@ -30,6 +35,7 @@ function displayTasks() {
 
         checkbox.addEventListener("change", function () {
             tasks[index].completed = checkbox.checked;
+            saveTasks();
             displayTasks();
         });
 
@@ -45,6 +51,7 @@ function displayTasks() {
 
         deleteBtn.addEventListener("click", function () {
             tasks.splice(index, 1);
+            saveTasks();
             displayTasks();
         });
 
@@ -68,6 +75,10 @@ addTaskBtn.addEventListener("click", function () {
         completed: false
     });
 
+    saveTasks();
     taskInput.value = "";
     displayTasks();
 });
+
+// Display previously saved tasks
+displayTasks();
