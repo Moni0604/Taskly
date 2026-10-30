@@ -1,2 +1,2 @@
 Taskly Git Practice
-This is the FEATURE version.
+This is the resolved version from both branches.
